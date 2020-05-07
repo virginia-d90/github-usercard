@@ -3,7 +3,7 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get(`https://api.github.com/users/virginia-d90`)
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,7 +49,34 @@ const followersArray = [];
       </div>
     </div>
 */
+function cardMaker(object){
+  //create elements
+  const card = document.createElement('div')
+  const profileImg = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const cardTitle = document.createElement('h3')
+  const userHandle = document.createElement('p')
+  const userLocal = document.createElement('p')
+  const userProfile = document.createElement('p')
+  const userLink = document.createElement('a')
+  const userFollowers = document.createElement('p')
+  const userFollowing = document.createElement('p')
+  const userBio = document.createElement('p')
 
+  //create structure
+  card.appendChild(profileImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(cardTitle)
+  cardInfo.appendChild(userHandle)
+  cardInfo.appendChild(userLocal)
+  cardInfo.appendChild(userProfile)
+  cardInfo.appendChild(userFollowers)
+  cardInfo.appendChild(userFollowing)
+  cardInfo.appendChild(userBio)
+  userProfile.appendChild(userLink)
+
+  
+}
 /*
   List of LS Instructors Github username's:
     tetondan
