@@ -24,12 +24,12 @@ axios.get(`https://api.github.com/users/virginia-d90`)
 */
 const entryPoint = document.querySelector('.cards')
 
-// axios.get(`https://api.github.com/users/virginia-d90`)
-// .then(result => {
-//   console.log(result.data)
-//   const newCard = cardMaker(result.data)
-//   entryPoint.appendChild(newCard)
-// })
+axios.get(`https://api.github.com/users/virginia-d90`)
+.then(result => {
+  console.log(result.data)
+  const newCard = cardMaker(result.data)
+  entryPoint.appendChild(newCard)
+})
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -42,43 +42,39 @@ const entryPoint = document.querySelector('.cards')
     user, and adding that card to the DOM.
 */
 
-const followersArray = ['virginia-d90',
+const followersArray = [
   'tetondan',
   'dustinmyers',
   'justsml',
   'luishrd',
   'bigknell'];
 
-// function getHub(username){
-//   axios.get(`https://api.github.com/users/${username}`)
-//     .then(result => {
-//       result.data.forEach(item => {
-//         const newHub = cardMaker({avatar_url, bio, followers, following, html_url, location, login, name})
-//         entryPoint.appendChild(newHub)
+followersArray.forEach(item => {
+  axios.get(`https://api.github.com/users/${item}`)
+.then(result => {
+  console.log(result.data)
+  const newCard = cardMaker(result.data)
+  entryPoint.appendChild(newCard)
+})
+})
+
+//THIS IS WHERE MY REQUESTS ALLOTMENT WAS REACHED
+// function getHub(entryArr){
+//   entryArr.forEach(item => {
+//     axios.get(`https://api.github.com/users/${item}`)
+//       .then(result => {
+//         result.data.forEach(entry => {
+//           const newCard = cardMaker(result.data)
+//           entryPoint.appendChild(newCard)
+//         })
 //       })
-      
-//     })
 
-//     .catch(error => {
-//       console.log('action failed')
-//     })
+//       .catch(error => {
+//         console.log('action fail')
+//       })
+//   })
 // }
-
-function getHub(entryArr){
-  entryArr.forEach(item => {
-    axios.get(`https://api.github.com/users/${item}`)
-      .then(result => {
-        result.data.forEach(entry => {
-          const newCard = cardMaker(result.data)
-          entryPoint.appendChild(newCard)
-        })
-      })
-      .catch(error => {
-        console.log('action fail')
-      })
-  })
-}
-getHub(followersArray)
+// getHub(followersArray)
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -136,12 +132,12 @@ function cardMaker(attrs){
   profileImg.src = avatar_url
   cardTitle.textContent = name
   userHandle.textContent = login
-  userLocal.textContent = location 
+  userLocal.textContent = `Location: ${location}`
   userLink.href = html_url
-  userLink.textContent = html_url
-  userFollowers.textContent = followers
-  userFollowing.textContent = following
-  userBio.textContent = bio
+  userLink.textContent = `Profile: ${html_url}`
+  userFollowers.textContent = `Followers: ${followers}` 
+  userFollowing.textContent = `Following: ${following}`
+  userBio.textContent = `Bio: ${bio}`
 
 return card
 }
