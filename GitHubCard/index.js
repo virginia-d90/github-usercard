@@ -3,7 +3,13 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
 axios.get(`https://api.github.com/users/virginia-d90`)
+
+// .then(result => {
+//   console.log(result.data)
+//   cardMaker(result.data)
+// })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -16,6 +22,14 @@ axios.get(`https://api.github.com/users/virginia-d90`)
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+const entryPoint = document.querySelector('.cards')
+
+// axios.get(`https://api.github.com/users/virginia-d90`)
+// .then(result => {
+//   console.log(result.data)
+//   const newCard = cardMaker(result.data)
+//   entryPoint.appendChild(newCard)
+// })
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -28,8 +42,43 @@ axios.get(`https://api.github.com/users/virginia-d90`)
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['virginia-d90',
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'];
 
+// function getHub(username){
+//   axios.get(`https://api.github.com/users/${username}`)
+//     .then(result => {
+//       result.data.forEach(item => {
+//         const newHub = cardMaker({avatar_url, bio, followers, following, html_url, location, login, name})
+//         entryPoint.appendChild(newHub)
+//       })
+      
+//     })
+
+//     .catch(error => {
+//       console.log('action failed')
+//     })
+// }
+
+function getHub(entryArr){
+  entryArr.forEach(item => {
+    axios.get(`https://api.github.com/users/${item}`)
+      .then(result => {
+        result.data.forEach(entry => {
+          const newCard = cardMaker(result.data)
+          entryPoint.appendChild(newCard)
+        })
+      })
+      .catch(error => {
+        console.log('action fail')
+      })
+  })
+}
+getHub(followersArray)
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -49,7 +98,9 @@ const followersArray = [];
       </div>
     </div>
 */
-function cardMaker(object){
+function cardMaker(attrs){
+  const {avatar_url, bio, followers, following, html_url, location, login, name} = attrs
+
   //create elements
   const card = document.createElement('div')
   const profileImg = document.createElement('img')
@@ -75,8 +126,26 @@ function cardMaker(object){
   cardInfo.appendChild(userBio)
   userProfile.appendChild(userLink)
 
+  //add classnames
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  cardTitle.classList.add('name')
+  userHandle.classList.add('username')
   
+  //add textContent
+  profileImg.src = avatar_url
+  cardTitle.textContent = name
+  userHandle.textContent = login
+  userLocal.textContent = location 
+  userLink.href = html_url
+  userLink.textContent = html_url
+  userFollowers.textContent = followers
+  userFollowing.textContent = following
+  userBio.textContent = bio
+
+return card
 }
+
 /*
   List of LS Instructors Github username's:
     tetondan
